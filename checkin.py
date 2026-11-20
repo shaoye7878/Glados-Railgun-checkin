@@ -1379,6 +1379,8 @@ def main() -> None:
         else:
             logger.info(f"{LogEmoji.START} 步骤 2: 执行签到")
             report = CheckinRunner(config).run()
+            if any(entry.result.code is CheckinStatus.FAILURE for entry in report.entries):
+                exit_code = 1
 
             logger.info(f"{LogEmoji.START} 步骤 3: 生成报告")
             logger.info(f"\n{LogEmoji.END} ========== 签到总结 ==========\n{report.title}\n{report.render()}")
